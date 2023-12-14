@@ -11,6 +11,8 @@ contract Main{
     //세번째 지갑 주소 소유자 - 같은 팀 팀원
     address[3] private fix_voter = [0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db];
 
+    address[3] private check_voter;
+
     uint256[2] public _result = [0, 0];
 
     function getContent() public view virtual returns (string memory) {
@@ -21,7 +23,12 @@ contract Main{
         bool check = false;
         for(uint256 i = 0; i < 3; i++){
             if(fix_voter[i] == voter){
+                if(check_voter[i] == voter){
+                    return "already";
+                }
+                check_voter[i] = voter;
                 check = true;
+                break;
             }
         }
         if(check){
@@ -34,7 +41,7 @@ contract Main{
             return "true";
 
         }else{
-            return "false";
+            return "no permission";
         }
     }
 
